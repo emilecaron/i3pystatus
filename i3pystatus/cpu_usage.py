@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from i3pystatus import IntervalModule
+from i3pystatus.core.util import make_bar
 
 
 class CpuUsage(IntervalModule):
@@ -15,7 +16,7 @@ class CpuUsage(IntervalModule):
 
     """
 
-    format = "{usage:02}%"
+    format = "{usage:02}% {usage_bar}"
     settings = (
         ("format", "format string"),
         ("critical_limit", "limit above which cpu use is critical"),
@@ -67,10 +68,14 @@ class CpuUsage(IntervalModule):
         self.prev_busy = cpu_busy
 
         cpu_busy_percentage = int(diff_cpu_busy / diff_cpu_total * 100)
+        cpu_busy_bar = make_bar(cpu_busy_percentage)
 
-        key = max([val for val in self.colormap if val<cpu_busy_percentage])
+        colorkey = max([val for val in self.colormap if val<cpu_busy_percentage])
+        
 
         self.output = {
-            "full_text": self.format.format(usage=cpu_busy_percentage),
-            "color": self.colormap[key],
+            "full_text": self.format.format(
+                usage=cpu_busy_percentage,
+                usage_bar=cpu_busy_bar),
+            "color": self.colormap[colorkey],
         }

@@ -18,7 +18,24 @@ class CpuUsage(IntervalModule):
     format = "{usage:02}%"
     settings = (
         ("format", "format string"),
+        ("critical_limit", "limit above which cpu use is critical"),
+        ("warning_limit", "limit above which cpu use is warning"),
+        ("color", "text color"),
+        ("critical_color", "text critical color"),
+        ("warning_color", "text warning color"),
     )
+
+    color = "#ffffff"
+    warning_color = "#ffa500"
+    critical_color = "#ff0000"
+    warning_limit = 50
+    critical_limit = 90
+
+    colormap={
+        0 : color,
+        warning_limit : warning_color,
+        critical_limit : critical_color
+    }
 
     def init(self):
         self.prev_idle = 0
@@ -51,8 +68,9 @@ class CpuUsage(IntervalModule):
 
         cpu_busy_percentage = int(diff_cpu_busy / diff_cpu_total * 100)
 
+        key = max([val for val in self.colormap if val<cpu_busy_percentage])
+
         self.output = {
-            "full_text": self.format.format(
-                usage=cpu_busy_percentage
-            )
+            "full_text": self.format.format(usage=cpu_busy_percentage),
+            "color": self.colormap[key],
         }

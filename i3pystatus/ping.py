@@ -6,8 +6,7 @@ from re import search
 
 class Ping(IntervalModule):
     """
-    Shows CPU usage.
-    The first output will be inacurate
+    Module to display ping
     Linux only
 
     Available formatters:

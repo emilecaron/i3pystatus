@@ -70,7 +70,7 @@ class CpuUsage(IntervalModule):
         cpu_busy_percentage = int(diff_cpu_busy / diff_cpu_total * 100)
         cpu_busy_bar = make_bar(cpu_busy_percentage)
 
-        colorkey = max([val for val in self.colormap if val<cpu_busy_percentage])
+        colorkey = max([val for val in self.colormap if val<=cpu_busy_percentage])
         
 
         self.output = {

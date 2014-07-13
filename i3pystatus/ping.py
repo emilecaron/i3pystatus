@@ -15,7 +15,7 @@ class Ping(IntervalModule):
 
     """
 
-    format = "{pingtime}ms"
+    format = "{pingtime:4.0f}ms"
     settings = (
         ("target", "server to ping"),
         ("interval", "interval between pings"),

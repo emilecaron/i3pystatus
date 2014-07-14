@@ -17,11 +17,11 @@ class Mem(IntervalModule):
     Requires psutil (from PyPI)
     """
 
-    format = "{avail_mem} MiB"
+    format = "{avail_mem} Mo"
     divisor = 1024 ** 2
-    color = "#00FF00"
-    warn_color = "#FFFF00"
-    alert_color = "#FF0000"
+    color = "#00ff00"
+    warn_color = "#ffff00"
+    alert_color = "#ff0000"
     warn_percentage = 50
     alert_percentage = 80
     round_size = 1
@@ -47,13 +47,13 @@ class Mem(IntervalModule):
         memory_usage = virtual_memory()
         used = memory_usage.used - memory_usage.cached - memory_usage.buffers
 
+        color= self.color
+
         if memory_usage.percent >= self.alert_percentage:
             color = self.alert_color
 
         elif memory_usage.percent >= self.warn_percentage:
             color = self.warn_color
-        else:
-            color = self.color
             
         cdict = {
                 "used_mem":used / self.divisor,
@@ -66,5 +66,5 @@ class Mem(IntervalModule):
 
         self.output = {
             "full_text": self.format.format(**cdict),
-            "color": color
+            "color": color,
         }

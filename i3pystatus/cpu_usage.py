@@ -16,7 +16,7 @@ class CpuUsage(IntervalModule):
 
     """
 
-    format = "{usage:02}% {usage_bar}"
+    format = "{usage:2.0f}% {usage_bar}"
     settings = (
         ("format", "format string"),
         ("critical_limit", "limit above which cpu use is critical"),

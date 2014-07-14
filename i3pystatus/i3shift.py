@@ -9,9 +9,10 @@ class i3shift(IntervalModule):
     """
 
     def run(self):
+        possible = leftshit_possible()
         self.output= {
-            "full_text": "<<<<",
-            "color": "#ff0000" if leftshift_possible() else "#ffffff",
+            "full_text": "<<<<" if possible else "<gap<",
+            "color": "#ff0000" if possible else "#ffffff",
         }
 
 
